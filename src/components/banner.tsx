@@ -15,7 +15,7 @@ export default function Banner() {
       className="relative flex min-h-[640px] flex-col justify-end bg-slate-800 bg-cover bg-center text-white md:min-h-[510px] md:h-[min(760px,100svh)]"
       style={{ backgroundImage: "linear-gradient(rgba(5, 24, 26, 0.57), rgba(5, 24, 26, 0.57)), url('https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?auto=format&fit=crop&w=2400&q=85')" }}
     >
-      <div className="flex flex-1 flex-col items-center justify-center px-6 pt-36 pb-16 text-center md:pt-28 md:pb-14">
+      <div className="flex flex-1 flex-col items-center justify-center px-6 py-16 text-center md:py-14">
         <h1 id="banner-title" className="text-5xl leading-[1.02] font-light tracking-[-0.055em] sm:text-6xl md:text-[68px] lg:text-7xl">
           Discover Your<br />Next Adventure
         </h1>

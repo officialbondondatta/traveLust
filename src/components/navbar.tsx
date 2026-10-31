@@ -4,13 +4,14 @@ import { UserRound } from "lucide-react";
 const navigation = [
   { label: "Home", href: "/" },
   { label: "Destinations", href: "/destinations" },
+  { label: "Add-Destinations", href: "/add-destinations" },
   { label: "My Bookings", href: "/bookings" },
   { label: "Admin", href: "/admin" },
 ];
 
 export default function Navbar() {
   return (
-    <header className="absolute inset-x-3 top-4 z-10 bg-white text-black">
+    <header className="shrink-0 border-b border-neutral-100 bg-white text-black">
       <nav aria-label="Main navigation" className="mx-auto grid max-w-7xl grid-cols-2 items-center gap-4 px-4 py-3 md:grid-cols-[1fr_auto_1fr] md:py-2">
         <div className="order-3 col-span-2 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs md:order-1 md:col-span-1 md:justify-start">
           {navigation.map(({ label, href }) => (
