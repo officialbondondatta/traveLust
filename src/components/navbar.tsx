@@ -33,14 +33,15 @@ export default function Navbar() {
         <div className="order-2 flex items-center justify-end gap-4 text-xs md:order-3 md:gap-6">
 
           {
-            user ?
+            user ? <>
+              <Link href="/profile" className="flex items-center gap-1 hover:text-cyan-600">
+                <UserRound className="size-3" aria-hidden="true" />
+                <span>Profile</span>
+              </Link>
               <UserPopOver></UserPopOver>
+            </>
               :
-              <div>
-                <Link href="/profile" className="flex items-center gap-1 hover:text-cyan-600">
-                  <UserRound className="size-3" aria-hidden="true" />
-                  <span>Profile</span>
-                </Link>
+              <div className="flex gap-3">
                 <Link href="/signin" className="whitespace-nowrap hover:text-cyan-600">Sign In</Link>
                 <Link href="/signup" className="whitespace-nowrap hover:text-cyan-600">Sign Up</Link>
               </div>

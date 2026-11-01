@@ -26,7 +26,7 @@ const UserPopOver = () => {
     }
     return (
         <Popover>
-            <PopoverTrigger >
+            <PopoverTrigger className={`cursor-pointer`}>
                 <Avatar>
                     <AvatarImage src={user?.image || ""} />
                     <AvatarFallback className="">User</AvatarFallback>
@@ -37,7 +37,7 @@ const UserPopOver = () => {
                     <PopoverTitle>{user?.name}</PopoverTitle>
                     <PopoverDescription>{user?.email}</PopoverDescription>
                 </PopoverHeader>
-                <Button onClick={handleSignOut} variant={"destructive"}>Sign Out</Button>
+                <Button className={`cursor-pointer`} onClick={handleSignOut} variant={"destructive"}>Sign Out</Button>
             </PopoverContent>
         </Popover>
     );
