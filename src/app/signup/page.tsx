@@ -21,6 +21,7 @@ export default function SignUpPage() {
         const formData = new FormData(form);
         const name = String(formData.get("name")).trim();
         const email = String(formData.get("email")).trim();
+        const image = String(formData.get("image")).trim()
         const password = String(formData.get("password"));
         const confirmPassword = String(formData.get("confirmPassword"));
 
@@ -34,12 +35,13 @@ export default function SignUpPage() {
         }
         setLoading(true);
         try {
-            const { error } = await authClient.signUp.email({ name, email, password });
+            const { error, data } = await authClient.signUp.email({ name, email, password, image });
             if (error) {
                 alert(error.message || "Could not create your account.");
                 return;
             }
             form.reset();
+            console.log(data)
             router.push("/");
             router.refresh();
         } catch {
