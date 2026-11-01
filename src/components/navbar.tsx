@@ -11,7 +11,6 @@ const navigation = [
   { label: "Destinations", href: "/destinations" },
   { label: "Add-Destinations", href: "/add-destinations" },
   { label: "My Bookings", href: "/bookings" },
-  { label: "Admin", href: "/admin" },
 ];
 
 export default function Navbar() {

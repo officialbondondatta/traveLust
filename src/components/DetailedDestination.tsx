@@ -1,13 +1,14 @@
+
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, CalendarDays, Check, MapPin, Star, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { ArrowLeft, CalendarDays, Check, MapPin, Star, X } from "lucide-react";
 import type { Destination } from "@/types/destination";
 import EditButtonDialog from "./EditButtonDialog";
 import DeleteAlert from "./DeleteAlert";
+import React from "react";
+import BookingDestination from "./bookingDestination";
 
-export default async function DetailedDestination({ params }: { params: Promise<{ id: string }> }) {
+const DetailedDestination = async ({ params }: { params: Promise<{ id: string }> }) => {
     const { id } = await params;
     const res = await fetch(`${process.env.LOCALURL}/destinations/${id}`);
     if (!res.ok) throw new Error("Unable to load destination");
@@ -19,7 +20,6 @@ export default async function DetailedDestination({ params }: { params: Promise<
         `Explore ${destination.country}`,
         destination.duration,
     ];
-
     return (
         <>
             <div className="mb-5 flex flex-wrap items-center justify-between gap-4">
@@ -60,14 +60,7 @@ export default async function DetailedDestination({ params }: { params: Promise<
                     <p className="text-xs text-neutral-500">Starting from</p>
                     <p className="mt-1 text-3xl text-cyan-600">${Number(destination.price).toLocaleString("en-US")}</p>
                     <p className="mt-1 text-xs text-neutral-500">per person</p>
-                    <form action="/bookings" method="get" className="mt-8">
-                        <input type="hidden" name="destination" value={destination._id ?? destination.destination} />
-                        <label htmlFor="departure" className="sr-only">Departure date</label>
-                        <Input id="departure" name="departure" type="date" defaultValue={destination.departure?.slice(0, 10)} required className="h-10 rounded-none border-neutral-100 bg-gray-50" />
-                        <div className="mt-4 border-t border-neutral-100 pt-4">
-                            <Button type="submit" className="h-11 w-full rounded-none bg-cyan-600 text-white hover:bg-cyan-700">Book Now <ArrowRight aria-hidden="true" /></Button>
-                        </div>
-                    </form>
+                    <BookingDestination destination={destination}></BookingDestination>
                     {!!destination.inclusions?.length && <ul className="mt-4 space-y-2 text-xs text-neutral-500">
                         {destination.inclusions.map((item) => <li key={item} className="flex gap-2"><Check aria-hidden="true" className="size-3.5 shrink-0 text-green-600" /> {item}</li>)}
                     </ul>}
@@ -76,3 +69,4 @@ export default async function DetailedDestination({ params }: { params: Promise<
         </>
     );
 }
+export default DetailedDestination
