@@ -1,16 +1,29 @@
-
+'use client'
 import Image from "next/image";
 import Link from "next/link";
-import { CalendarDays, CircleCheck, Clock, Eye, MapPin, Trash2 } from "lucide-react";
+import { CalendarDays, CircleCheck, Clock, Eye, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { Booking } from "@/types/booking";
 import type { Destination } from "@/types/destination";
+import { useRouter } from "next/navigation";
 
 const BookingCards = ({ booking, destination }: { booking: Booking; destination?: Destination }) => {
+    const router = useRouter()
     const status = booking.status?.toLowerCase() || "pending";
     const confirmed = status === "confirmed";
     const departure = new Date(booking.bookingData["user-departure"]);
     const date = Number.isNaN(departure.getTime()) ? "Not specified" : departure.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric", timeZone: "UTC" });
+
+    const handleCancelBooking = async () => {
+        const result = await fetch(`${process.env.NEXT_PUBLIC_LOCALURL}/booking/${booking?._id}`, {
+            method: "DELETE",
+        })
+        const res = await result.json()
+        if (res.deletedCount > 0) {
+            alert("Booking Cancelled Successfully")
+            router.refresh()
+        }
+    }
     return (
         <article className="grid gap-6 border border-neutral-100 bg-white p-5 shadow-sm md:grid-cols-[minmax(220px,1fr)_2fr]">
             <div className="relative aspect-video overflow-hidden bg-neutral-100">
@@ -26,7 +39,7 @@ const BookingCards = ({ booking, destination }: { booking: Booking; destination?
                 <div className="mt-auto flex flex-wrap items-end justify-between gap-4 pt-5">
                     <p className="text-3xl text-cyan-600">{destination ? `$${Number(destination.price).toLocaleString("en-US")}` : "Price unavailable"}</p>
                     <div className="flex gap-3">
-                        <Button disabled variant="outline" title="Cancellation is not available yet" className="h-11 rounded-none border-red-300 px-5 text-red-500"><Trash2 aria-hidden="true" /> Cancel</Button>
+                        <Button onClick={handleCancelBooking} variant="outline" title="Cancellation is not available yet" className="h-11 rounded-none border-red-300 px-5 text-red-500"><Trash2 aria-hidden="true" /> Cancel</Button>
                         {destination && <Button nativeButton={false} render={<Link href={`/destinations/${encodeURIComponent(destination._id ?? destination.destination)}`} />} className="h-11 rounded-none bg-cyan-600 px-5 text-white hover:bg-cyan-700"><Eye aria-hidden="true" /> View</Button>}
                     </div>
                 </div>
