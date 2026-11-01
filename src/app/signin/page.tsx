@@ -16,7 +16,8 @@ export default function SignInPage() {
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        const formData = new FormData(event.currentTarget);
+        const form = event.currentTarget
+        const formData = new FormData(form);
         const email = String(formData.get("email")).trim();
         const password = String(formData.get("password"));
 
@@ -27,6 +28,7 @@ export default function SignInPage() {
                 alert(error.message || "Could not sign in.");
                 return;
             }
+            form.reset()
             router.push("/");
             router.refresh();
         } catch {
