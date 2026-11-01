@@ -28,7 +28,7 @@ export default function Navbar() {
             <UserRound className="size-3" aria-hidden="true" />
             <span>Profile</span>
           </Link>
-          <Link href="/login" className="whitespace-nowrap hover:text-cyan-600">Login</Link>
+          <Link href="/signin" className="whitespace-nowrap hover:text-cyan-600">Sign In</Link>
           <Link href="/signup" className="whitespace-nowrap hover:text-cyan-600">Sign Up</Link>
         </div>
       </nav>
