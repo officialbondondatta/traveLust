@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import type { Destination } from "@/types/destination";
 import EditButtonDialog from "./EditButtonDialog";
+import DeleteAlert from "./DeleteAlert";
 
 export default async function DetailedDestination({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
@@ -27,7 +28,7 @@ export default async function DetailedDestination({ params }: { params: Promise<
                 </Link>
                 <div className="flex gap-3 items-center justify-center">
                     <EditButtonDialog editableDestination={destination} />
-                    <Button variant="outline" className="h-9 rounded-none border-red-200 px-5 text-red-500 hover:bg-red-50 hover:text-red-600"><X aria-hidden="true" /> Delete</Button>
+                    <DeleteAlert id={id} />
                 </div>
             </div>
 
