@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import type { Booking } from "@/types/booking";
 import type { Destination } from "@/types/destination";
 import { useRouter } from "next/navigation";
+import { getTokenFromClient } from "@/lib/getTokenFromClient";
 
 const BookingCards = ({ booking, destination }: { booking: Booking; destination?: Destination }) => {
     const router = useRouter()
@@ -15,8 +16,12 @@ const BookingCards = ({ booking, destination }: { booking: Booking; destination?
     const date = Number.isNaN(departure.getTime()) ? "Not specified" : departure.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric", timeZone: "UTC" });
 
     const handleCancelBooking = async () => {
+        const token = await getTokenFromClient()
         const result = await fetch(`${process.env.NEXT_PUBLIC_LOCALURL}/booking/${booking?._id}`, {
             method: "DELETE",
+            headers: {
+                authorization: token
+            }
         })
         const res = await result.json()
         if (res.deletedCount > 0) {

@@ -5,6 +5,7 @@ import { Button } from "./ui/button";
 import { ArrowRight } from "lucide-react";
 import { useSession } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
+import { getTokenFromClient } from "@/lib/getTokenFromClient";
 
 const BookingDestination = ({ destination }: { destination: Destination }) => {
     const router = useRouter()
@@ -18,10 +19,14 @@ const BookingDestination = ({ destination }: { destination: Destination }) => {
         const userName = user?.name
         const userEmail = user?.email
         const fullBookingData = { userName, userEmail, bookingData }
+
+        const token = await getTokenFromClient()
+
         const result = await fetch(`${process.env.NEXT_PUBLIC_LOCALURL}/booking`, {
             method: "POST",
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                authorization: token
             },
             body: JSON.stringify(fullBookingData)
         })

@@ -4,25 +4,18 @@ import { ArrowLeft, CalendarDays, Check, MapPin, Star, X } from "lucide-react";
 import type { Destination } from "@/types/destination";
 import EditButtonDialog from "./EditButtonDialog";
 import DeleteAlert from "./DeleteAlert";
-import React from "react";
 import BookingDestination from "./bookingDestination";
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
+import { getTokenFromServer } from "@/lib/getTokenFromServer";
 
 const DetailedDestination = async ({ params }: { params: Promise<{ id: string }> }) => {
     const { id } = await params;
-    const retriveToken = await auth.api.getToken({
-        headers: await headers()
-    })
-    const token = retriveToken?.token
+    const token = await getTokenFromServer()
     const res = await fetch(`${process.env.LOCALURL}/destinations/${id}`, {
         headers: {
-            authorization: `Bearer ${token}`
+            authorization: token
         }
     });
     if (!res.ok) throw new Error("Unable to load destination");
-
-
 
     const destination: Destination = await res.json();
     const highlights = destination.highlights?.length ? destination.highlights : [

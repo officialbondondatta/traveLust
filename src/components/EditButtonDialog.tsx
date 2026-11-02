@@ -18,6 +18,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import type { Destination } from "@/types/destination";
 import { useRouter } from "next/navigation";
+import { getTokenFromClient } from "@/lib/getTokenFromClient";
 
 const EditButtonDialog = ({ editableDestination }: { editableDestination: Destination }) => {
     const router = useRouter()
@@ -31,11 +32,12 @@ const EditButtonDialog = ({ editableDestination }: { editableDestination: Destin
         const form = event.currentTarget
         const formData = new FormData(form)
         const updatedPackage = Object.fromEntries(formData.entries())
-
+        const token = await getTokenFromClient()
         const result = await fetch(`${process.env.NEXT_PUBLIC_LOCALURL}/edit-destination/${editableDestination._id}`, {
             method: "PATCH",
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                authorization: token
             },
             body: JSON.stringify(updatedPackage)
         })

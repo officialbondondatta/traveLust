@@ -11,12 +11,18 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
+import { getTokenFromClient } from "@/lib/getTokenFromClient";
 import { X } from "lucide-react";
 import { redirect } from "next/navigation";
 const DeleteAlert = ({ id }: { id: string }) => {
+
     const handleDelete = async () => {
+        const token = await getTokenFromClient()
         const res = await fetch(`${process.env.NEXT_PUBLIC_LOCALURL}/destinations/${id}`, {
-            method: "DELETE"
+            method: "DELETE",
+            headers: {
+                authorization: token
+            }
         })
         const result = await res.json()
         if (result.deletedCount > 0) {
