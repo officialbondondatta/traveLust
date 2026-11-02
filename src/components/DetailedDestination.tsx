@@ -1,4 +1,3 @@
-
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, CalendarDays, Check, MapPin, Star, X } from "lucide-react";
@@ -7,14 +6,25 @@ import EditButtonDialog from "./EditButtonDialog";
 import DeleteAlert from "./DeleteAlert";
 import React from "react";
 import BookingDestination from "./bookingDestination";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 const DetailedDestination = async ({ params }: { params: Promise<{ id: string }> }) => {
     const { id } = await params;
-    const res = await fetch(`${process.env.LOCALURL}/destinations/${id}`);
+    const retriveToken = await auth.api.getToken({
+        headers: await headers()
+    })
+    const token = retriveToken?.token
+    const res = await fetch(`${process.env.LOCALURL}/destinations/${id}`, {
+        headers: {
+            authorization: `Bearer ${token}`
+        }
+    });
     if (!res.ok) throw new Error("Unable to load destination");
+
+
+
     const destination: Destination = await res.json();
-
-
     const highlights = destination.highlights?.length ? destination.highlights : [
         `${destination.category} experience`,
         `Explore ${destination.country}`,

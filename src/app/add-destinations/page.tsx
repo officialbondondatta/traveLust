@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { authClient } from "@/lib/auth-client";
 
 export default function AddDestinationPage() {
 
@@ -17,10 +18,17 @@ export default function AddDestinationPage() {
         const formData = new FormData(form)
         const newPackage = Object.fromEntries(formData.entries())
 
+        const { data, error } = await authClient.token()
+        if (error) {
+            console.dir(error)
+        }
+        const token = data?.token
+
         const result = await fetch(`${process.env.NEXT_PUBLIC_LOCALURL}/add-destination`, {
             method: "POST",
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                authorization: `Bearer ${token}`
             },
             body: JSON.stringify(newPackage)
         })
