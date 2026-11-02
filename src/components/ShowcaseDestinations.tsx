@@ -3,7 +3,9 @@ import DestinationGrid from "@/components/destination-grid";
 
 
 const ShowcaseDestinations = async () => {
-    const res = await fetch(`${process.env.LOCALURL}/destinations`)
+    const res = await fetch(`${process.env.LOCALURL}/destinations`, {
+        cache: 'no-store'
+    })
     if (!res.ok) throw new Error("Unable to load destinations")
     const destinations: Destination[] = await res.json()
     return (
