@@ -11,6 +11,7 @@ import { Button } from "./ui/button";
 import { authClient, useSession } from "@/lib/auth-client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const UserPopOver = () => {
     const { data: session } = useSession()
@@ -37,6 +38,7 @@ const UserPopOver = () => {
                     <PopoverTitle>{user?.name}</PopoverTitle>
                     <PopoverDescription>{user?.email}</PopoverDescription>
                 </PopoverHeader>
+                <Button nativeButton={false} render={<Link href="/profile" />} variant="outline">My Profile</Button>
                 <Button className={`cursor-pointer`} onClick={handleSignOut} variant={"destructive"}>Sign Out</Button>
             </PopoverContent>
         </Popover>
