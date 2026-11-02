@@ -2,6 +2,7 @@ import Banner from "@/components/banner";
 import WhyChooseUs from "@/components/why-choose-us";
 import Testimonials from "@/components/testimonials";
 import JourneyCta from "@/components/journey-cta";
+import FeaturedDestinations from "@/components/featured-destinations";
 
 export default function Home() {
   return (
@@ -9,6 +10,7 @@ export default function Home() {
 
       <main>
         <Banner />
+        <FeaturedDestinations />
         <WhyChooseUs />
         <Testimonials />
         <JourneyCta />
